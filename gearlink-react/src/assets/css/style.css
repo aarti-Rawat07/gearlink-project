@@ -159,6 +159,117 @@
     }
 }
 
+.profile-nav {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.profile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(15, 31, 64, 0.12);
+    border-radius: 50px;
+    padding: 8px 14px;
+    background: #ffffff;
+    color: #0a1a2f;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-badge:hover,
+.profile-badge.open {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(15, 31, 64, 0.08);
+}
+
+.profile-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #ff6b00;
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.profile-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    text-align: left;
+}
+
+.profile-text small {
+    display: block;
+    color: #6c757d;
+    font-size: 11px;
+}
+
+.profile-text strong {
+    font-size: 14px;
+    color: #0a1a2f;
+}
+
+.profile-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 12px);
+    width: 220px;
+    background: #ffffff;
+    border: 1px solid rgba(15, 31, 64, 0.12);
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(15, 31, 64, 0.12);
+    z-index: 50;
+    overflow: hidden;
+}
+
+.profile-menu a,
+.profile-menu button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 14px 18px;
+    background: transparent;
+    border: none;
+    color: #0a1a2f;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.profile-menu a:hover,
+.profile-menu button:hover {
+    background: #f8f9ff;
+}
+
+.profile-user-info {
+    padding: 16px 18px;
+    border-bottom: 1px solid rgba(15, 31, 64, 0.08);
+    background: #f7faff;
+}
+
+.profile-user-info strong {
+    display: block;
+    font-size: 14px;
+    color: #0a1a2f;
+    margin-bottom: 4px;
+}
+
+.profile-user-info span {
+    display: block;
+    font-size: 13px;
+    color: #5f6f8d;
+}
+
+.profile-menu button {
+    cursor: pointer;
+}
 
 /*** Header ***/
 .carousel .carousel-caption {
