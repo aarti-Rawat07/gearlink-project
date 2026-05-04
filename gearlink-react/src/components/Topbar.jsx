@@ -1,6 +1,6 @@
 export default function Topbar() {
     return <>
-        <div className="container-fluid bg-primary text-white d-none d-lg-flex wow fadeIn" data-wow-delay="0.1s">
+        <div className="container-fluid topbar-custom text-white d-none d-lg-flex wow fadeIn" data-wow-delay="0.1s">
         <div className="container py-3">
             <div className="d-flex align-items-center">
                 <a href="index.html">

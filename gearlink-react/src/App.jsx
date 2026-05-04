@@ -13,11 +13,13 @@ import Footer from './components/Footer';
 import Login from './components/Login';
 import Register from './components/Register';
 import Products from './components/Products';
+import ProductDetails from './components/ProductDetails';
 import Dashboard from './components/Dashboard';
 import AdminDashboard from './components/AdminDashboard';
 import Orders from './components/Orders';
 import History from './components/History';
 import Cart from './components/Cart';
+import CategoryPage from "./components/CategoryPage";
 // import MainLayout from "./layouts/MainLayout";
 // import DashboardLayout from "./layouts/DashboardLayout";
 
@@ -26,30 +28,62 @@ function PrivateRoute({ children }) {
   return token ? children : <Navigate to="/login" replace />;
 }
 
+function AdminRoute({ children }) {
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (role !== 'admin') {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return children;
+}
+
+function UserRoute({ children }) {
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (role === 'admin') {
+    return <Navigate to="/admin-dashboard" replace />;
+  }
+
+  return children;
+}
+
 function AppContent() {
   const location = useLocation();
-  const showNavFooter = location.pathname !== '/dashboard';
+  const showNavFooter = !location.pathname.startsWith('/dashboard') && !location.pathname.startsWith('/admin-dashboard');
 
   return (
     <>
       {/* <Spinner/> */}
 
-      <Topbar />
+      {showNavFooter && <Topbar />}
       {showNavFooter && <Navbar />}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='about' element={<About />} />
         <Route path='products' element={<Products />} />
+        <Route path='product/:id' element={<ProductDetails />} />
+        <Route path="/category" element={<CategoryPage />} />
         <Route path='contact' element={<Contact />} />
         <Route path='support' element={<Support />} />
         <Route path='services' element={<Services />} />
         <Route path='login' element={<Login />} />
         <Route path='register' element={<Register />} />
-        <Route path='dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-        <Route path='admin-dashboard' element={<AdminDashboard />} />
-        <Route path='orders' element={<PrivateRoute><Orders /></PrivateRoute>} />
-        <Route path='history' element={<PrivateRoute><History /></PrivateRoute>} />
-        <Route path='cart' element={<PrivateRoute><Cart /></PrivateRoute>} />
+        <Route path='dashboard' element={<UserRoute><Dashboard /></UserRoute>} />
+        <Route path='admin-dashboard/*' element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+        <Route path='orders' element={<UserRoute><Orders /></UserRoute>} />
+        <Route path='history' element={<UserRoute><History /></UserRoute>} />
+        <Route path='cart' element={<UserRoute><Cart /></UserRoute>} />
       </Routes>
       {showNavFooter && <Footer />}
     </>

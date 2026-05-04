@@ -1,13 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import aboutImg from "../assets/img/auto-about.jpg";
-import bosch from "../assets/img/bosch.jpg";
-import denso from "../assets/img/denso.jpg";
-import valeo from "../assets/img/valeo.jpg";
-import skf from "../assets/img/skf.jpg";
-
 const About = () => {
+    const [quickName, setQuickName] = useState('');
+    const [quickEmail, setQuickEmail] = useState('');
+    const [quickMessage, setQuickMessage] = useState('');
+    const [quickStatus, setQuickStatus] = useState('');
+    const API_URL = '/api';
+
+    const validateEmail = (email) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
+    const handleQuickNameChange = (e) => {
+        setQuickName(e.target.value);
+        setQuickStatus('');
+    };
+
+    const handleQuickEmailChange = (e) => {
+        setQuickEmail(e.target.value);
+        setQuickStatus('');
+    };
+
+    const handleQuickMessageChange = (e) => {
+        setQuickMessage(e.target.value);
+        setQuickStatus('');
+    };
+
+    const handleQuickSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!quickEmail.trim() || !quickMessage.trim()) {
+            setQuickStatus('Please enter your email address and a message.');
+            return;
+        }
+
+        if (!validateEmail(quickEmail)) {
+            setQuickStatus('Please enter a valid email address.');
+            return;
+        }
+
+        if (quickMessage.trim().length < 10) {
+            setQuickStatus('Please enter a longer message so we can better assist you.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/contact`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: quickName, email: quickEmail, message: quickMessage, form: 'about-quick-enquiry' }),
+            });
+            const result = await response.json();
+            if (response.ok) {
+                setQuickStatus(result.message || 'Thank you! We will contact you soon.');
+                setQuickName('');
+                setQuickEmail('');
+                setQuickMessage('');
+            } else {
+                setQuickStatus(result.error || 'Unable to send your enquiry. Please try again later.');
+            }
+        } catch (error) {
+            console.error(error);
+            setQuickStatus('Unable to send your enquiry. Please try again later.');
+        }
+    };
+
+    const aboutImg = "/images/auto-about.jpg";
+    const brands = [
+        { id: 1, name: "Bosch", image: "/images/bosch.jpg" },
+        { id: 2, name: "Denso", image: "/images/denso.jpg" },
+        { id: 3, name: "Valeo", image: "/images/valeo.jpg" },
+        { id: 4, name: "SKF", image: "/images/skf.jpg" },
+    ];
     return (
         <div>
 
@@ -87,7 +152,7 @@ const About = () => {
                                             <i className="fa fa-tachometer-alt fa-2x text-primary"></i>
                                         </div>
                                         <h5 className="lh-base text-uppercase mb-0">
-                                            Fast Nationwide Delivery
+                                            Accurate Stock Availability
                                         </h5>
                                     </div>
                                 </div>
@@ -195,11 +260,11 @@ const About = () => {
                                 <div className="p-5 pt-0">
 
                                     <h5 className="text-uppercase">
-                                        Fast Delivery
+                                        Stock Planning Support
                                     </h5>
 
                                     <p>
-                                        Efficient logistics ensuring quick and safe delivery of parts.
+                                        Clear stock status and reliable sourcing so you can order the right part when you need it.
                                     </p>
 
                                 </div>
@@ -217,29 +282,18 @@ const About = () => {
             <section className="brands">
                 <div className="brand-container">
 
-                    <div className="brand-card">
-                        <img src={bosch} alt="Bosch" />
-                        <h3>Bosch</h3>
-                        <p>Brake Systems & Electrical Components</p>
-                    </div>
-
-                    <div className="brand-card">
-                        <img src={denso} alt="Denso" />
-                        <h3>Denso</h3>
-                        <p>Automotive Electronics & Sensors</p>
-                    </div>
-
-                    <div className="brand-card">
-                        <img src={valeo} alt="Valeo" />
-                        <h3>Valeo</h3>
-                        <p>Lighting Systems & Electrical Parts</p>
-                    </div>
-
-                    <div className="brand-card">
-                        <img src={skf} alt="SKF" />
-                        <h3>SKF</h3>
-                        <p>Bearings & Engine Components</p>
-                    </div>
+                    {brands.map((brand) => (
+                        <div className="brand-card" key={brand.id}>
+                            <img src={brand.image} alt={brand.name} />
+                            <h3>{brand.name}</h3>
+                            <p>
+                                {brand.name === "Bosch" && "Brake Systems & Electrical Components"}
+                                {brand.name === "Denso" && "Automotive Electronics & Sensors"}
+                                {brand.name === "Valeo" && "Lighting Systems & Electrical Parts"}
+                                {brand.name === "SKF" && "Bearings & Engine Components"}
+                            </p>
+                        </div>
+                    ))}
 
                 </div>
             </section>
@@ -272,28 +326,62 @@ const About = () => {
 
                             </div>
 
-                            <div className="col-md-6">
+                            <form className="col-md-6" onSubmit={handleQuickSubmit}>
 
                                 <div className="form-floating mb-3">
+                                    <input
+                                        type="text"
+                                        name="quickName"
+                                        value={quickName}
+                                        onChange={handleQuickNameChange}
+                                        className="form-control border-0 bg-light"
+                                        id="name"
+                                        placeholder="Your Name"
+                                    />
+                                    <label htmlFor="name">
+                                        Your Name
+                                    </label>
+                                </div>
 
+                                <div className="form-floating mb-3">
                                     <input
                                         type="email"
+                                        name="quickEmail"
+                                        value={quickEmail}
+                                        onChange={handleQuickEmailChange}
                                         className="form-control border-0 bg-light"
                                         id="mail"
                                         placeholder="Your Email"
                                     />
-
                                     <label htmlFor="mail">
                                         Your Email
                                     </label>
-
                                 </div>
 
-                                <button className="btn btn-primary w-100 py-3">
+                                <div className="form-floating mb-3">
+                                    <textarea
+                                        name="quickMessage"
+                                        value={quickMessage}
+                                        onChange={handleQuickMessageChange}
+                                        className="form-control border-0 bg-light"
+                                        id="message"
+                                        placeholder="Message"
+                                        style={{ height: '120px' }}
+                                    />
+                                    <label htmlFor="message">
+                                        Your Message
+                                    </label>
+                                </div>
+
+                                {quickStatus && (
+                                    <div className="alert alert-info mb-3">{quickStatus}</div>
+                                )}
+
+                                <button type="submit" className="btn btn-primary w-100 py-3">
                                     Submit Enquiry
                                 </button>
 
-                            </div>
+                            </form>
 
                         </div>
 

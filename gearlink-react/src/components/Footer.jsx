@@ -58,15 +58,15 @@ const Footer = () => {
               Quick Links
             </h5>
 
-            <Link className="btn btn-link" to="/">Home</Link>
+            <Link className="btn btn-link text-white" to="/">Home</Link>
 
-            <Link className="btn btn-link" to="/about">About Us</Link>
+            <Link className="btn btn-link text-white" to="/about">About Us</Link>
 
-            <Link className="btn btn-link" to="/products">Products</Link>
+            <Link className="btn btn-link text-white" to="/products">Products</Link>
 
-            <Link className="btn btn-link" to="/contact">Contact</Link>
+            <Link className="btn btn-link text-white" to="/contact">Contact</Link>
 
-            <Link className="btn btn-link" to="/support">Support</Link>
+            <Link className="btn btn-link text-white" to="/support">Support</Link>
 
           </div>
 

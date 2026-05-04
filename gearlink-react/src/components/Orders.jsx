@@ -55,7 +55,7 @@ const Orders = () => {
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-start mb-4">
         <div>
           <h1 className="mb-2">My Orders</h1>
-          <p className="text-muted">Track the progress of orders placed through your account.</p>
+          <p className="text-muted">Review the current status of your placed orders and reorder items as needed.</p>
         </div>
         <div className="text-md-end mt-3 mt-md-0">
           <span className="badge bg-primary me-2">Total Orders: {orders.length}</span>

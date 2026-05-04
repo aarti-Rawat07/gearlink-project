@@ -38,7 +38,7 @@ const Support = () => {
     let aiResponse = "I'm sorry, I didn't understand that. Please ask about products, carts, or support.";
 
     if (input.includes("order") || input.includes("status")) {
-      aiResponse = "You can view your past orders on the Order History page. Real-time tracking and delivery status are not available here.";
+      aiResponse = "You can view your past orders on the Order History page. We do not offer real-time delivery tracking, but you can review your order status here.";
     } else if (input.includes("product") || input.includes("buy")) {
       aiResponse = "Browse products on the Products page, then add items to your cart to purchase.";
     } else if (input.includes("cart")) {

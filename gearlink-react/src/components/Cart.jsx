@@ -1,30 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import brakePad from "../assets/img/brake-pad.jpg";
-import oilFilter from "../assets/img/oil-filter.jpg";
-import battery from "../assets/img/car-battery.jpg";
-import shock from "../assets/img/shock-absorber.jpg";
-import headlight from "../assets/img/headlight.jpg";
-import clutch from "../assets/img/clutch-plate.jpg";
-import radiator from "../assets/img/radiator.jpg";
-import spark from "../assets/img/spark-plug.jpg";
 
 const imageMap = {
-    "brake-pad.jpg": brakePad,
-    "oil-filter.jpg": oilFilter,
-    "car-battery.jpg": battery,
-    "shock-absorber.jpg": shock,
-    "headlight.jpg": headlight,
-    "clutch-plate.jpg": clutch,
-    "radiator.jpg": radiator,
-    "spark-plug.jpg": spark,
+    "brake-pad.jpg": "/images/brake-pad.jpg",
+    "oil-filter.jpg": "/images/oil-filter.jpg",
+    "car-battery.jpg": "/images/car-battery.jpg",
+    "shock-absorber.jpg": "/images/shock-absorber.jpg",
+    "headlight.jpg": "/images/headlight.jpg",
+    "clutch-plate.jpg": "/images/clutch-plate.jpg",
+    "radiator.jpg": "/images/radiator.jpg",
+    "spark-plug.jpg": "/images/spark-plug.jpg",
 };
 
 const getImageUrl = (image) => {
-    if (!image) return brakePad;
+    if (!image) return "/images/brake-pad.jpg";
     if (typeof image !== "string") return image;
     const filename = image.split("/").pop();
-    return imageMap[filename] || image;
+    return imageMap[filename] || `/images/${filename}` || "/images/brake-pad.jpg";
 };
 
 const Cart = () => {

@@ -1,34 +1,28 @@
 import React from "react";
 
-// import images
-import bosch from "../assets/img/bosch.jpg";
-import denso from "../assets/img/denso.jpg";
-import valeo from "../assets/img/valeo.jpg";
-import skf from "../assets/img/skf.jpg";
-
 const brands = [
   {
     id: 1,
     name: "Bosch",
-    image: bosch,
+    image: "/images/bosch.jpg",
     description: "Brake Systems & Electrical Components",
   },
   {
     id: 2,
     name: "Denso",
-    image: denso,
+    image: "/images/denso.jpg",
     description: "Automotive Electronics & Sensors",
   },
   {
     id: 3,
     name: "Valeo",
-    image: valeo,
+    image: "/images/valeo.jpg",
     description: "Lighting Systems & Electrical Parts",
   },
   {
     id: 4,
     name: "SKF",
-    image: skf,
+    image: "/images/skf.jpg",
     description: "Bearings & Engine Components",
   },
 ];
@@ -36,16 +30,24 @@ const brands = [
 const Brands = () => {
   return (
     <section className="brands">
-      <div className="brand-container">
+      <div className="container pt-6 pb-6">
+        <div className="section-header text-center mb-5">
+          <span className="section-label">Our Partners</span>
+          <h2>Trusted Automotive Brands</h2>
+          <p>We partner with top global manufacturers to provide genuine parts and consistent stock availability.</p>
+        </div>
 
-        {brands.map((brand) => (
-          <div className="brand-card" key={brand.id}>
-            <img src={brand.image} alt={brand.name} />
-            <h3>{brand.name}</h3>
-            <p>{brand.description}</p>
-          </div>
-        ))}
+        <div className="brand-container">
 
+          {brands.map((brand) => (
+            <div className="brand-card" key={brand.id}>
+              <img src={brand.image} alt={brand.name} />
+              <h3>{brand.name}</h3>
+              <p>{brand.description}</p>
+            </div>
+          ))}
+
+        </div>
       </div>
     </section>
   );

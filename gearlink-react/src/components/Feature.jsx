@@ -19,9 +19,9 @@ const features = [
   },
   {
     icon: "fa-tools",
-    title: "Fast Order Fulfillment",
+    title: "Efficient Order Processing",
     description:
-      "Efficient logistics and inventory management ensure quick order processing and delivery.",
+      "Advanced stock visibility and quick approval workflows keep parts moving smoothly through your supply chain.",
   },
 ];
 
@@ -52,7 +52,7 @@ const Feature = () => {
                     className="position-relative text-body text-uppercase small d-flex justify-content-between"
                     href="#"
                   >
-                    <b className="bg-white pe-3">Read More</b>
+                    <b className="bg-white pe-3">View Catalog</b>
                     <i className="bi bi-arrow-right bg-white ps-3"></i>
                   </a>
                 </div>

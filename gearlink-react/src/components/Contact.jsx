@@ -1,7 +1,154 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import headerImg from "../assets/images/page-header.jpg";
 import '../assets/css/style.css'
 const Contact = () => {
+    const [contactData, setContactData] = useState({ name: '', email: '', mobile: '', city: '', message: '' });
+    const [contactStatus, setContactStatus] = useState('');
+    const [quickName, setQuickName] = useState('');
+    const [quickEmail, setQuickEmail] = useState('');
+    const [quickMessage, setQuickMessage] = useState('');
+    const [quickStatus, setQuickStatus] = useState('');
+    const [inquiries, setInquiries] = useState([]);
+    const [inquiryStatus, setInquiryStatus] = useState('');
+
+    const API_URL = '/api';
+
+    const validateEmail = (email) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
+    const fetchInquiries = async (email) => {
+        if (!email || !validateEmail(email)) {
+            setInquiries([]);
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/contact?email=${encodeURIComponent(email.toLowerCase().trim())}`);
+            const data = await response.json();
+            if (response.ok) {
+                setInquiries(data);
+                setInquiryStatus('');
+            } else {
+                setInquiryStatus(data.error || 'Unable to load your enquiries.');
+            }
+        } catch (error) {
+            console.error(error);
+            setInquiryStatus('Unable to load your enquiries.');
+            setInquiries([]);
+        }
+    };
+
+    useEffect(() => {
+        const userEmail = localStorage.getItem('userEmail');
+        if (validateEmail(userEmail)) {
+            fetchInquiries(userEmail);
+        }
+    }, []);
+
+    const handleContactChange = (e) => {
+        const { name, value } = e.target;
+        setContactData((prev) => ({ ...prev, [name]: value }));
+        setContactStatus('');
+    };
+
+    const handleContactSubmit = async (e) => {
+        e.preventDefault();
+        const { name, email, message } = contactData;
+
+        if (!name.trim() || !email.trim() || !message.trim()) {
+            setContactStatus('Please fill in your name, email, and message.');
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            setContactStatus('Please enter a valid email address.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/contact`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ...contactData, form: 'contact' }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                setContactStatus(result.message || 'Thank you! Your message has been sent.');
+                setContactData({ name: '', email: '', mobile: '', city: '', message: '' });
+                fetchInquiries(email);
+            } else {
+                setContactStatus(result.error || 'Unable to send your message. Please try again later.');
+            }
+        } catch (error) {
+            console.error(error);
+            setContactStatus('Unable to send your message. Please try again later.');
+        }
+    };
+
+    const handleQuickNameChange = (e) => {
+        setQuickName(e.target.value);
+        setQuickStatus('');
+    };
+
+    const handleQuickEmailChange = (e) => {
+        setQuickEmail(e.target.value);
+        setQuickStatus('');
+    };
+
+    const handleQuickMessageChange = (e) => {
+        setQuickMessage(e.target.value);
+        setQuickStatus('');
+    };
+
+    const handleQuickSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!quickEmail.trim() || !quickMessage.trim()) {
+            setQuickStatus('Please enter your email address and a message.');
+            return;
+        }
+
+        if (!validateEmail(quickEmail)) {
+            setQuickStatus('Please enter a valid email address.');
+            return;
+        }
+
+        if (quickMessage.trim().length < 10) {
+            setQuickStatus('Please enter a longer message so we can better assist you.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/contact`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: quickName, email: quickEmail, message: quickMessage, form: 'contact-quick-enquiry' }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                setQuickStatus(result.message || 'Thank you! We will contact you soon.');
+                setQuickName('');
+                setQuickEmail('');
+                setQuickMessage('');
+                fetchInquiries(quickEmail);
+            } else {
+                setQuickStatus(result.error || 'Unable to send your enquiry. Please try again later.');
+            }
+        } catch (error) {
+            console.error(error);
+            setQuickStatus('Unable to send your enquiry. Please try again later.');
+        }
+    };
+
     return (
         <div>
 
@@ -106,12 +253,15 @@ const Contact = () => {
 
                                     <h2 className="text-uppercase mb-4">Contact Us</h2>
 
-                                    <div className="row g-3">
+                                    <form className="row g-3" onSubmit={handleContactSubmit}>
 
                                         <div className="col-sm-6">
                                             <div className="form-floating">
                                                 <input
                                                     type="text"
+                                                    name="name"
+                                                    value={contactData.name}
+                                                    onChange={handleContactChange}
                                                     className="form-control border-0 bg-light"
                                                     id="name"
                                                     placeholder="Your Name"
@@ -124,6 +274,9 @@ const Contact = () => {
                                             <div className="form-floating">
                                                 <input
                                                     type="email"
+                                                    name="email"
+                                                    value={contactData.email}
+                                                    onChange={handleContactChange}
                                                     className="form-control border-0 bg-light"
                                                     id="mail"
                                                     placeholder="Your Email"
@@ -136,6 +289,9 @@ const Contact = () => {
                                             <div className="form-floating">
                                                 <input
                                                     type="text"
+                                                    name="mobile"
+                                                    value={contactData.mobile}
+                                                    onChange={handleContactChange}
                                                     className="form-control border-0 bg-light"
                                                     id="mobile"
                                                     placeholder="Mobile"
@@ -148,6 +304,9 @@ const Contact = () => {
                                             <div className="form-floating">
                                                 <input
                                                     type="text"
+                                                    name="city"
+                                                    value={contactData.city}
+                                                    onChange={handleContactChange}
                                                     className="form-control border-0 bg-light"
                                                     id="city"
                                                     placeholder="City"
@@ -159,6 +318,9 @@ const Contact = () => {
                                         <div className="col-12">
                                             <div className="form-floating">
                                                 <textarea
+                                                    name="message"
+                                                    value={contactData.message}
+                                                    onChange={handleContactChange}
                                                     className="form-control border-0 bg-light"
                                                     placeholder="Message"
                                                     id="message"
@@ -169,13 +331,19 @@ const Contact = () => {
                                             </div>
                                         </div>
 
+                                        {contactStatus && (
+                                            <div className="col-12">
+                                                <div className="alert alert-info mb-0">{contactStatus}</div>
+                                            </div>
+                                        )}
+
                                         <div className="col-12 text-center">
-                                            <button className="btn btn-primary w-100 py-3">
+                                            <button type="submit" className="btn btn-primary w-100 py-3">
                                                 Submit Now
                                             </button>
                                         </div>
 
-                                    </div>
+                                    </form>
 
                                 </div>
 
@@ -186,7 +354,45 @@ const Contact = () => {
                     </div>
                 </div>
 
+                {inquiries.length > 0 && (
+                    <div className="container-fluid mt-5">
+                        <div className="container pb-5">
+                            <div className="bg-white p-5 mb-5">
+                                <h2 className="text-uppercase mb-4">Your Previous Enquiries</h2>
+                                <div className="table-responsive">
+                                    <table className="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Message</th>
+                                                <th>Status</th>
+                                                <th>Reply</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {inquiries.map((inq) => (
+                                                <tr key={inq._id || inq.id}>
+                                                    <td>{new Date(inq.createdAt).toLocaleDateString()}</td>
+                                                    <td style={{ maxWidth: '260px' }}>{inq.message}</td>
+                                                    <td>{inq.status || 'Pending'}</td>
+                                                    <td style={{ maxWidth: '260px' }}>{inq.reply || '-'} </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
+                {inquiryStatus && (
+                    <div className="container-fluid mt-3">
+                        <div className="container pb-5">
+                            <div className="alert alert-info">{inquiryStatus}</div>
+                        </div>
+                    </div>
+                )}
 
                 {/* Google Map */}
                 <div className="container-fluid px-0">
@@ -228,7 +434,7 @@ const Contact = () => {
                                     <p className="fs-5 fst-italic mb-0">
                                         Have questions about automotive parts or bulk orders?
                                         Contact GearLink and our team will assist you with
-                                        product availability, pricing and delivery information.
+                                        product availability, pricing and availability information.
                                     </p>
 
                                 </div>
@@ -236,25 +442,53 @@ const Contact = () => {
                             </div>
 
 
-                            <div className="col-md-6">
+                            <form className="col-md-6" onSubmit={handleQuickSubmit}>
 
                                 <div className="form-floating mb-3">
+                                    <input
+                                        type="text"
+                                        name="quickName"
+                                        value={quickName}
+                                        onChange={handleQuickNameChange}
+                                        className="form-control border-0 bg-light"
+                                        placeholder="Your Name"
+                                    />
+                                    <label>Your Name</label>
+                                </div>
 
+                                <div className="form-floating mb-3">
                                     <input
                                         type="email"
+                                        name="quickEmail"
+                                        value={quickEmail}
+                                        onChange={handleQuickEmailChange}
                                         className="form-control border-0 bg-light"
                                         placeholder="Your Email"
                                     />
-
                                     <label>Enter Your Email</label>
-
                                 </div>
 
-                                <button className="btn btn-primary w-100 py-3">
+                                <div className="form-floating mb-3">
+                                    <textarea
+                                        name="quickMessage"
+                                        value={quickMessage}
+                                        onChange={handleQuickMessageChange}
+                                        className="form-control border-0 bg-light"
+                                        placeholder="Your Message"
+                                        style={{ height: '120px' }}
+                                    />
+                                    <label>Your Message</label>
+                                </div>
+
+                                {quickStatus && (
+                                    <div className="alert alert-info mb-3">{quickStatus}</div>
+                                )}
+
+                                <button type="submit" className="btn btn-primary w-100 py-3">
                                     Send Enquiry
                                 </button>
 
-                            </div>
+                            </form>
 
                         </div>
 

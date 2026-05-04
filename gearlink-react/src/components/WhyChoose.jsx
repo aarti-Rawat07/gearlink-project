@@ -6,10 +6,10 @@ const reasons = [
       "We supply engine components, brake systems, suspension parts, batteries, filters and many other automotive spare parts.",
   },
   {
-    icon: "fa-truck",
-    title: "Fast Delivery",
+    icon: "fa-warehouse",
+    title: "Stock Availability",
     description:
-      "Our logistics network ensures quick and reliable delivery of automotive parts to workshops, dealers and customers.",
+      "Clear visibility into part availability and lead time helps workshops and dealers plan purchasing with confidence.",
   },
   {
     icon: "fa-check-circle",
@@ -31,14 +31,14 @@ const WhyChoose = () => {
       <div className="container">
 
         <div className="text-center mx-auto mb-5" style={{ maxWidth: "700px" }}>
+          <span className="section-label text-primary">Why Choose Us</span>
           <h1 className="display-6 text-uppercase text-white">
-            Why Choose GearLink
+            Why Leading Workshops Choose GearLink
           </h1>
 
           <p>
-            GearLink Solution Pvt Ltd is committed to delivering reliable
-            automotive parts with quality assurance, competitive pricing and
-            fast delivery across India.
+            GearLink is trusted by professionals for genuine parts, strong supplier partnerships,
+            industry-grade reliability, and consistent stock availability across India.
           </p>
         </div>
 

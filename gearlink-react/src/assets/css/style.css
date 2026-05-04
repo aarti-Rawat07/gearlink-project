@@ -359,11 +359,11 @@
 }
 
 /* .page-header {
-    background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url(../img/carousel-1.jpg) center center no-repeat;
+    background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url(/images/carousel-1.jpg) center center no-repeat;
     background-size: cover;
 } */
 .page-header{
-background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), url("../img/auto-parts-bg.jpg");
+background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), url("/images/auto-parts-bg.jpg");
 background-position: center;
 background-size: cover;
 }
@@ -415,7 +415,7 @@ box-shadow:0 10px 20px rgba(0,0,0,0.2);
 
 /*** Features ***/
 .feature {
-    background: linear-gradient(to right, rgba(0, 0, 0, .1), rgba(0, 0, 0, 1) 50%), url(../img/auto-parts-bg.jpg) left center no-repeat;
+    background: linear-gradient(to right, rgba(0, 0, 0, .1), rgba(0, 0, 0, 1) 50%), url(/images/auto-parts-bg.jpg) left center no-repeat;
     background-size: cover;
 }
 
@@ -520,10 +520,91 @@ height:200px;
 object-fit:cover;
 }
 
+.hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    background: rgba(255,255,255,.95);
+    border-radius: 50px;
+    padding: .65rem 1rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+    box-shadow: 0 12px 30px rgba(15, 31, 64, 0.12);
+}
+
+.section-header {
+    text-align: center;
+}
+
+.section-header .section-label {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    font-size: .85rem;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.section-header p {
+    color: #5f6f8d;
+    line-height: 1.8;
+    margin-bottom: 0;
+}
+
+.brand-card {
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 25px 55px rgba(15, 31, 64, 0.08);
+    transition: transform .3s ease, box-shadow .3s ease;
+    background: #ffffff;
+    padding: 2rem;
+}
+
+.brand-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 70px rgba(15, 31, 64, 0.12);
+}
+
+.brand-card img {
+    max-width: 120px;
+    margin-bottom: 1.25rem;
+}
+
+.brand-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: .75rem;
+}
+
+.brands .brand-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 1.5rem;
+}
+
+.hero-label {
+    display: inline-block;
+    font-size: .9rem;
+    letter-spacing: 1px;
+    opacity: .9;
+}
 
 /*** Appoinment ***/
 .appoinment {
-    background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url(../img/auto-parts-bg.jpg) left center no-repeat;
+    background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url(/images/auto-parts-bg.jpg) left center no-repeat;
     background-size: cover;
 }
 
@@ -696,7 +777,7 @@ object-fit:cover;
 
 /*** Appoinment ***/
 .newsletter {
-    background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url(../img/auto-parts-bg.jpg) left center no-repeat;
+    background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url(/images/auto-parts-bg.jpg) left center no-repeat;
     background-size: cover;
 }
 

@@ -17,6 +17,14 @@ const Dashboard = () => {
   const [chatInput, setChatInput] = useState("");
   const messagesEndRef = useRef(null);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userEmail");
+    navigate("/login");
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -109,9 +117,9 @@ const Dashboard = () => {
         <button className="sidebar-link" onClick={() => { setShowSupport(true); setShowChat(false); }}>
           <i className="fas fa-robot"></i> AI Support
         </button>
-        <Link to="/" className="sidebar-link logout">
+        <button className="sidebar-link logout" onClick={handleLogout}>
           <i className="fas fa-sign-out-alt"></i> Logout
-        </Link>
+        </button>
       </div>
 
       {/* Main Content */}
@@ -151,11 +159,11 @@ const Dashboard = () => {
           </div>
           <div className="stat-card">
             <div className="stat-icon">
-              <i className="fas fa-truck"></i>
+              <i className="fas fa-check-circle"></i>
             </div>
             <div className="stat-content">
               <h3>5</h3>
-              <p>Orders Delivered</p>
+              <p>Orders Completed</p>
             </div>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import brakePad from "../assets/img/brake-pad.jpg";
 import oilFilter from "../assets/img/oil-filter.jpg";
 import battery from "../assets/img/car-battery.jpg";
@@ -24,15 +25,11 @@ function Services() {
       <div className="container">
 
         {/* Section Title */}
-        <div
-          className="text-center mx-auto"
-          style={{ maxWidth: "600px" }}
-        >
-          <h1 className="display-6 text-uppercase mb-5">
-            Automotive Spare Parts & Accessories
-          </h1>
+        <div className="section-header text-center mx-auto" style={{ maxWidth: "700px" }}>
+          <span className="section-label">Featured Products</span>
+          <h2>Premium Spare Parts for Every Automotive Need</h2>
           <p>
-            GearLink supplies high-quality automotive components for reliable vehicle performance.
+            GearLink supplies high-quality automotive components for workshops, dealerships, and fleet managers with transparent pricing and rapid fulfillment.
           </p>
         </div>
 
@@ -62,6 +59,12 @@ function Services() {
             </div>
           ))}
 
+        </div>
+
+        <div className="text-center mt-5">
+          <Link to="/products" className="btn btn-primary py-3 px-5">
+            View All Spare Parts
+          </Link>
         </div>
 
       </div>

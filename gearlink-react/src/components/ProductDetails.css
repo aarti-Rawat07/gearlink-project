@@ -1,0 +1,41 @@
+.product-image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.product-image {
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+
+.product-image:hover {
+  transform: scale(1.1);
+}
+
+.product-info {
+  padding: 20px;
+}
+
+.rating .fa-star {
+  font-size: 18px;
+}
+
+.stock-status {
+  font-weight: bold;
+}
+
+.card {
+  border-radius: 15px;
+  border: none;
+}
+
+.btn {
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .product-image-container {
+    margin-bottom: 20px;
+  }
+}

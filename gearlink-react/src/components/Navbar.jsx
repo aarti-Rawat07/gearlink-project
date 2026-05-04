@@ -35,9 +35,9 @@ export default function Navbar() {
     };
 
     return <>
-        <div className="container-fluid bg-white sticky-top wow fadeIn" data-wow-delay="0.1s">
+        <div className="container-fluid navbar-shell sticky-top wow fadeIn" data-wow-delay="0.1s">
             <div className="container">
-                <nav className="navbar navbar-expand-lg bg-white navbar-light p-lg-0">
+                <nav className="navbar navbar-expand-lg navbar-custom p-lg-0">
                     <Link to="/" className="navbar-brand d-lg-none">
                         <h1 className="fw-bold m-0">GearLink Pvt Ltd</h1>
                     </Link>
@@ -50,7 +50,7 @@ export default function Navbar() {
                             <Link to="/" className="nav-item nav-link active">Home</Link>
                             <Link to="/about" className="nav-item nav-link">About</Link>
                             <Link to="/products" className="nav-item nav-link">Products</Link>
-                            <Link to="/services" className="nav-item nav-link">Categories</Link>
+                            <Link to="/category" className="nav-item nav-link">Categories</Link>
                             <Link to="/contact" className="nav-item nav-link">Contact</Link>
                         </div>
                         <div className="navbar-nav ms-auto">
@@ -76,12 +76,24 @@ export default function Navbar() {
                                                     {userEmail && <span>{userEmail}</span>}
                                                     {userRole && <span className="user-role">{userRole}</span>}
                                                 </div>
-                                                <Link to="/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</Link>
-                                                <Link to="/cart" onClick={() => setMenuOpen(false)}>Cart</Link>
-                                                <Link to="/orders" onClick={() => setMenuOpen(false)}>My Orders</Link>
-                                                <Link to="/history" onClick={() => setMenuOpen(false)}>History</Link>
-                                                <Link to="/support" onClick={() => setMenuOpen(false)}>Support</Link>
-                                                <button type="button" onClick={() => { setMenuOpen(false); handleLogout(); }}>Logout</button>
+                                                {localStorage.getItem("role") === "admin" ? (
+                                                    <>
+                                                        <Link to="/admin-dashboard" onClick={() => setMenuOpen(false)}>Admin Dashboard</Link>
+                                                        <Link to="/admin-dashboard/inquiries" onClick={() => setMenuOpen(false)}>Customer Inquiries</Link>
+                                                        <Link to="/admin-dashboard/products" onClick={() => setMenuOpen(false)}>Manage Products</Link>
+                                                        <Link to="/admin-dashboard/categories" onClick={() => setMenuOpen(false)}>Manage Categories</Link>
+                                                        <button type="button" onClick={() => { setMenuOpen(false); handleLogout(); }}>Logout</button>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <Link to="/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</Link>
+                                                        <Link to="/cart" onClick={() => setMenuOpen(false)}>Cart</Link>
+                                                        <Link to="/orders" onClick={() => setMenuOpen(false)}>My Orders</Link>
+                                                        <Link to="/history" onClick={() => setMenuOpen(false)}>History</Link>
+                                                        <Link to="/support" onClick={() => setMenuOpen(false)}>Support</Link>
+                                                        <button type="button" onClick={() => { setMenuOpen(false); handleLogout(); }}>Logout</button>
+                                                    </>
+                                                )}
                                             </div>
                                         )}
                                     </div>
