@@ -64,24 +64,34 @@ const Products = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
+            console.log("Fetching products from /api/products...");
             try {
-                const res = await axios.get("/api/products", { timeout: 3000 });
+                const res = await axios.get("/api/products");
+                console.log("Backend response received:", res.data);
                 if (res.data && res.data.length > 0) {
                     setProducts(res.data);
                 } else {
-                    console.log("No products returned from backend, using sample data");
+                    console.warn("Backend returned empty list, forcing sampleProducts fallback.");
                     setProducts(sampleProducts);
                 }
             } catch (err) {
-                console.error("Failed to fetch products, using sample data", err);
+                console.error("Axios fetch failed, using sample data:", err.message);
                 setProducts(sampleProducts);
             }
         };
         fetchProducts();
     }, []);
 
-    const brands = ["All", ...Array.from(new Set(products.map(p => p.brand || 'Other')))];
-    const categories = ["All", ...Array.from(new Set(products.map(p => p.category || 'Other')))];
+    // Monitor product state changes
+    useEffect(() => {
+        console.log("Products state updated. Total products:", products.length);
+        if (products.length > 0) {
+            console.log("First product example:", products[0]);
+        }
+    }, [products]);
+
+    const brands = useMemo(() => ["All", ...Array.from(new Set(products.map(p => p.brand || 'Other')))], [products]);
+    const categories = useMemo(() => ["All", ...Array.from(new Set(products.map(p => p.category || 'Other')))], [products]);
 
     const filteredProducts = useMemo(() => {
         let result = products.filter(p => {

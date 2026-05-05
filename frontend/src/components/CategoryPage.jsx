@@ -69,17 +69,19 @@ const CategoryPage = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
+            console.log("CategoryPage: Fetching products from /api/products...");
             try {
-                const response = await axios.get('/api/products', { timeout: 3000 });
+                const response = await axios.get('/api/products');
+                console.log("CategoryPage: Response received:", response.data);
                 if (response.data && response.data.length > 0) {
                     setProducts(response.data);
                 } else {
-                    console.log("No products from backend, using sample data");
+                    console.warn("CategoryPage: Backend empty, using sample data");
                     setProducts(sampleProducts);
                 }
                 setLoading(false);
             } catch (err) {
-                console.error('Failed to load products, using sample data', err);
+                console.error('CategoryPage: Failed to load products, using sample data', err.message);
                 setProducts(sampleProducts);
                 setLoading(false);
             }
@@ -88,11 +90,21 @@ const CategoryPage = () => {
         fetchProducts();
     }, []);
 
+    // Monitor product state
+    useEffect(() => {
+        console.log("CategoryPage: Products state size:", products.length);
+    }, [products]);
+
     // If there's a category parameter, show filtered products
-    if (categoryParam) {
-        const filteredProducts = products.filter(product =>
+    const filteredProducts = useMemo(() => {
+        if (!categoryParam) return [];
+        console.log("CategoryPage: Filtering for category:", categoryParam);
+        const filtered = products.filter(product =>
             product.category && product.category.toLowerCase().includes(categoryParam.toLowerCase())
         );
+        console.log("CategoryPage: Filtered results count:", filtered.length);
+        return filtered;
+    }, [products, categoryParam]);
 
         if (loading) {
             return (
