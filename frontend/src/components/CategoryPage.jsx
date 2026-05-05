@@ -106,6 +106,7 @@ const CategoryPage = () => {
         return filtered;
     }, [products, categoryParam]);
 
+    if (categoryParam) {
         if (loading) {
             return (
                 <div className="container py-5">
