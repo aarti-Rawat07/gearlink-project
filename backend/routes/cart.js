@@ -68,6 +68,45 @@ router.put('/:id', auth, async (req, res) => {
   }
 });
 
+// Update quantity of a product in cart
+router.put('/item/:productId', auth, async (req, res) => {
+  const { quantity } = req.body;
+  try {
+    const cart = await Cart.findOne({ user: req.user.id, status: 'pending' });
+    if (!cart) return res.status(404).json({ error: 'Cart not found' });
+    
+    const item = cart.products.find(p => p.product.toString() === req.params.productId);
+    if (!item) return res.status(404).json({ error: 'Product not in cart' });
+    
+    if (quantity <= 0) {
+      cart.products = cart.products.filter(p => p.product.toString() !== req.params.productId);
+    } else {
+      item.quantity = quantity;
+    }
+    
+    await cart.save();
+    await cart.populate('products.product');
+    res.json(cart);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Remove product from cart
+router.delete('/item/:productId', auth, async (req, res) => {
+  try {
+    const cart = await Cart.findOne({ user: req.user.id, status: 'pending' });
+    if (!cart) return res.status(404).json({ error: 'Cart not found' });
+    
+    cart.products = cart.products.filter(p => p.product.toString() !== req.params.productId);
+    await cart.save();
+    await cart.populate('products.product');
+    res.json(cart);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 // Checkout (user can checkout their own pending cart)
 router.post('/checkout', auth, async (req, res) => {
   try {
