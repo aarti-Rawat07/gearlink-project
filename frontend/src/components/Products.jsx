@@ -23,9 +23,9 @@ const getImageUrl = (image) => {
 const sampleProducts = [
     { id: 1, name: "Premium Brake Pads", brand: "Brembo", category: "Brakes", price: 2500, oldPrice: 3000, rating: 4.8, stock: "In Stock", image: "/images/brake-pad.jpg" },
     { id: 2, name: "High Performance Oil Filter", brand: "K&N", category: "Engine", price: 850, rating: 4.5, stock: "In Stock", image: "/images/oil-filter.jpg" },
-    { id: 3, name: "Heavy Duty Car Battery", brand: "Bosch", category: "Electrical", price: 4500, oldPrice: 5000, rating: 4.9, stock: "In Stock", image: "/images/car-battery.jpg" },
+    { id: 3, name: "Heavy Duty Car Battery", brand: "Bosch", category: "Battery", price: 4500, oldPrice: 5000, rating: 4.9, stock: "In Stock", image: "/images/car-battery.jpg" },
     { id: 4, name: "Gas Shock Absorber", brand: "Monroe", category: "Suspension", price: 3200, rating: 4.2, stock: "Out of Stock", image: "/images/shock-absorber.jpg" },
-    { id: 5, name: "LED Headlight Bulbs", brand: "Philips", category: "Electrical", price: 2800, oldPrice: 3500, rating: 4.7, stock: "In Stock", image: "/images/headlight.jpg" },
+    { id: 5, name: "LED Headlight Bulbs", brand: "Philips", category: "Lights", price: 2800, oldPrice: 3500, rating: 4.7, stock: "In Stock", image: "/images/headlight.jpg" },
     { id: 6, name: "Performance Clutch Kit", brand: "Exedy", category: "Transmission", price: 8900, rating: 4.6, stock: "In Stock", image: "/images/clutch-plate.jpg" },
     { id: 7, name: "Aluminum Radiator", brand: "Mishimoto", category: "Engine", price: 5200, oldPrice: 6000, rating: 4.4, stock: "In Stock", image: "/images/radiator.jpg" },
     { id: 8, name: "Iridium Spark Plugs", brand: "NGK", category: "Engine", price: 1200, rating: 4.8, stock: "In Stock", image: "/images/spark-plug.jpg" },
@@ -38,7 +38,7 @@ const sampleProducts = [
     { id: 15, name: "Ignition Coil", brand: "NGK", category: "Electrical", price: 1800, rating: 4.6, stock: "In Stock", image: "/images/spark-plug.jpg" },
     { id: 16, name: "Brake Rotors Pair", brand: "Brembo", category: "Brakes", price: 5500, oldPrice: 6200, rating: 4.8, stock: "In Stock", image: "/images/brake-pad.jpg" },
     { id: 17, name: "Suspension Control Arm", brand: "Moog", category: "Suspension", price: 2800, rating: 4.3, stock: "In Stock", image: "/images/shock-absorber.jpg" },
-    { id: 18, name: "Tail Light Assembly", brand: "Hella", category: "Electrical", price: 3100, rating: 4.5, stock: "In Stock", image: "/images/headlight.jpg" },
+    { id: 18, name: "Tail Light Assembly", brand: "Hella", category: "Lights", price: 3100, rating: 4.5, stock: "In Stock", image: "/images/headlight.jpg" },
     { id: 19, name: "Manual Transmission Fluid", brand: "Castrol", category: "Transmission", price: 1100, rating: 4.7, stock: "In Stock", image: "/images/oil-filter.jpg" },
     { id: 20, name: "Racing Steering Wheel", brand: "Momo", category: "Accessories", price: 8500, oldPrice: 9500, rating: 4.9, stock: "Out of Stock", image: "/images/clutch-plate.jpg" },
 ];

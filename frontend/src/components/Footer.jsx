@@ -90,16 +90,16 @@ const Footer = () => {
 
           </div>
     {/* copyrights */} 
- <div class="container-fluid text-body copyright py-4">
-    <div class="container">
-        <div class="row">
+ <div className="container-fluid text-body copyright py-4">
+    <div className="container">
+        <div className="row">
 
-            <div class="col-md-6 text-center text-md-start">
-                &copy; <a class="fw-semi-bold" href="#">GearLink Solution Pvt Ltd</a>,
+            <div className="col-md-6 text-center text-md-start">
+                &copy; <a className="fw-semi-bold" href="#">GearLink Solution Pvt Ltd</a>,
                 All Rights Reserved.
             </div>
 
-            <div class="col-md-6 text-center text-md-end">
+            <div className="col-md-6 text-center text-md-end">
                 Designed for Automotive Parts Supply Platform
             </div>
 

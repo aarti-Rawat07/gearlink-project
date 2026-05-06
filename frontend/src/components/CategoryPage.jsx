@@ -23,9 +23,9 @@ const getImageUrl = (image) => {
 const sampleProducts = [
     { id: 1, _id: "1", name: "Premium Brake Pads", brand: "Brembo", category: "Brakes", price: 2500, oldPrice: 3000, rating: 4.8, stock: "In Stock", image: "/images/brake-pad.jpg" },
     { id: 2, _id: "2", name: "High Performance Oil Filter", brand: "K&N", category: "Engine", price: 850, rating: 4.5, stock: "In Stock", image: "/images/oil-filter.jpg" },
-    { id: 3, _id: "3", name: "Heavy Duty Car Battery", brand: "Bosch", category: "Electrical", price: 4500, oldPrice: 5000, rating: 4.9, stock: "In Stock", image: "/images/car-battery.jpg" },
+    { id: 3, _id: "3", name: "Heavy Duty Car Battery", brand: "Bosch", category: "Battery", price: 4500, oldPrice: 5000, rating: 4.9, stock: "In Stock", image: "/images/car-battery.jpg" },
     { id: 4, _id: "4", name: "Gas Shock Absorber", brand: "Monroe", category: "Suspension", price: 3200, rating: 4.2, stock: "Out of Stock", image: "/images/shock-absorber.jpg" },
-    { id: 5, _id: "5", name: "LED Headlight Bulbs", brand: "Philips", category: "Electrical", price: 2800, oldPrice: 3500, rating: 4.7, stock: "In Stock", image: "/images/headlight.jpg" },
+    { id: 5, _id: "5", name: "LED Headlight Bulbs", brand: "Philips", category: "Lights", price: 2800, oldPrice: 3500, rating: 4.7, stock: "In Stock", image: "/images/headlight.jpg" },
     { id: 6, _id: "6", name: "Performance Clutch Kit", brand: "Exedy", category: "Transmission", price: 8900, rating: 4.6, stock: "In Stock", image: "/images/clutch-plate.jpg" },
     { id: 7, _id: "7", name: "Aluminum Radiator", brand: "Mishimoto", category: "Engine", price: 5200, oldPrice: 6000, rating: 4.4, stock: "In Stock", image: "/images/radiator.jpg" },
     { id: 8, _id: "8", name: "Iridium Spark Plugs", brand: "NGK", category: "Engine", price: 1200, rating: 4.8, stock: "In Stock", image: "/images/spark-plug.jpg" },
@@ -38,7 +38,7 @@ const sampleProducts = [
     { id: 15, _id: "15", name: "Ignition Coil", brand: "NGK", category: "Electrical", price: 1800, rating: 4.6, stock: "In Stock", image: "/images/spark-plug.jpg" },
     { id: 16, _id: "16", name: "Brake Rotors Pair", brand: "Brembo", category: "Brakes", price: 5500, oldPrice: 6200, rating: 4.8, stock: "In Stock", image: "/images/brake-pad.jpg" },
     { id: 17, _id: "17", name: "Suspension Control Arm", brand: "Moog", category: "Suspension", price: 2800, rating: 4.3, stock: "In Stock", image: "/images/shock-absorber.jpg" },
-    { id: 18, _id: "18", name: "Tail Light Assembly", brand: "Hella", category: "Electrical", price: 3100, rating: 4.5, stock: "In Stock", image: "/images/headlight.jpg" },
+    { id: 18, _id: "18", name: "Tail Light Assembly", brand: "Hella", category: "Lights", price: 3100, rating: 4.5, stock: "In Stock", image: "/images/headlight.jpg" },
     { id: 19, _id: "19", name: "Manual Transmission Fluid", brand: "Castrol", category: "Transmission", price: 1100, rating: 4.7, stock: "In Stock", image: "/images/oil-filter.jpg" },
     { id: 20, _id: "20", name: "Racing Steering Wheel", brand: "Momo", category: "Accessories", price: 8500, oldPrice: 9500, rating: 4.9, stock: "Out of Stock", image: "/images/clutch-plate.jpg" },
 ];
@@ -56,7 +56,7 @@ const CategoryPage = () => {
         { name: "Brake System", image: "/images/brake-pad.jpg", link: "Brake", subtitle: "1,800+ parts" },
         { name: "Batteries", image: "/images/car-battery.jpg", link: "Battery", subtitle: "1,200+ parts" },
         { name: "Oil Filters", image: "/images/oil-filter.jpg", link: "Engine", subtitle: "2,300+ parts" },
-        { name: "Lights", image: "/images/headlight.jpg", link: "Electrical", subtitle: "1,100+ parts" },
+        { name: "Lights", image: "/images/headlight.jpg", link: "Lights", subtitle: "1,100+ parts" },
         { name: "Suspension", image: "/images/shock-absorber.jpg", link: "Suspension", subtitle: "1,500+ parts" },
         { name: "Transmission", image: "/images/clutch-plate.jpg", link: "Transmission", subtitle: "900+ parts" },
         { name: "Cooling", image: "/images/radiator.jpg", link: "Engine", subtitle: "1,100+ parts" },
@@ -81,9 +81,11 @@ const CategoryPage = () => {
                 }
                 setLoading(false);
             } catch (err) {
-                console.error('CategoryPage: Failed to load products, using sample data', err.message);
-                setProducts(sampleProducts);
+                console.error('CategoryPage: CATCH BLOCK - Failed to load products:', err.message);
+                console.log('CategoryPage: Setting products to sampleProducts');
+                setProducts([...sampleProducts]);
                 setLoading(false);
+                console.log('CategoryPage: loading set to false');
             }
         };
 
@@ -141,7 +143,7 @@ const CategoryPage = () => {
                 <div className="d-flex flex-wrap justify-content-center gap-2 mb-4">
                     {categoryOptions.map((category) => (
                         <Link
-                            key={category.link}
+                            key={category.name}
                             to={`/category?category=${category.link}`}
                             className={`btn btn-sm ${category.link.toLowerCase() === categoryParam.toLowerCase() ? 'btn-primary' : 'btn-outline-secondary'}`}>
                             {category.name}
@@ -224,7 +226,7 @@ const CategoryPage = () => {
 
             <div className="row g-4">
                 {categoryOptions.map((category) => (
-                    <div key={category.link} className="col-xl-3 col-lg-4 col-md-6">
+                    <div key={category.name} className="col-xl-3 col-lg-4 col-md-6">
                         <Link to={`/category?category=${category.link}`} className="text-decoration-none">
                             <div className="card category-card h-100 shadow-sm border-0 overflow-hidden">
                                 <div className="position-relative">

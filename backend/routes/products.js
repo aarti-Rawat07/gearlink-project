@@ -10,6 +10,7 @@ router.get('/', async (req, res) => {
     const products = await Product.find();
     res.json(products);
   } catch (err) {
+    require('fs').appendFileSync('api_error.log', new Date().toISOString() + ': /api/products error: ' + err.message + '\n');
     res.status(400).json({ error: err.message });
   }
 });
