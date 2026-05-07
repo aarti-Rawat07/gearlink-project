@@ -57,7 +57,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`/api/products/${id}`, { timeout: 3000 });
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${id}`, { timeout: 3000 });
         if (response.data) {
           setProduct(response.data);
           setLoading(false);
@@ -79,7 +79,7 @@ const ProductDetails = () => {
 
     const fetchRelatedProducts = async () => {
       try {
-        const response = await axios.get('/api/products', { timeout: 3000 });
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`, { timeout: 3000 });
         let allProducts = [];
         if (response.data && response.data.length > 0) {
           allProducts = response.data;
@@ -179,24 +179,42 @@ const ProductDetails = () => {
                   {renderStars(product.rating)} <span className="ms-2">({product.rating}/5)</span>
                 </div>
                 <h3 className="text-primary fw-bold mb-3">₹{product.price}</h3>
-                <p className={`stock-status mb-3 ${product.stock === 'In Stock' ? 'text-success' : 'text-danger'}`}>
-                  {product.stock}
-                </p>
+                <div className="stock-status mb-3">
+                  {typeof product.stock === 'number' || !isNaN(Number(product.stock)) ? (
+                    Number(product.stock) > 0 ? (
+                      <span className="text-success">
+                        <i className="fa fa-check-circle me-1"></i> {product.stock} Units In Stock
+                      </span>
+                    ) : (
+                      <span className="text-danger">
+                        <i className="fa fa-times-circle me-1"></i> Out of Stock
+                      </span>
+                    )
+                  ) : (
+                    <span className={product.stock === 'In Stock' ? 'text-success' : 'text-danger'}>
+                      {product.stock}
+                    </span>
+                  )}
+                </div>
                 <p className="text-muted mb-4">{(product.description || "This high-quality automotive part is designed for optimal performance and reliability. Perfect for your vehicle maintenance needs.").substring(0, 150)}...</p>
 
                 <div className="d-grid gap-2">
                   <button
                     className="btn btn-primary btn-lg"
                     onClick={handleOrderOnWhatsApp}
-                    disabled={product.stock !== 'In Stock'}
+                    disabled={
+                      (typeof product.stock === 'number' || !isNaN(Number(product.stock))) 
+                        ? Number(product.stock) <= 0 
+                        : product.stock !== 'In Stock'
+                    }
                   >
-                    <i className="fab fa-whatsapp me-2"></i>Order on WhatsApp
+                    <i className="fab fa-whatsapp me-2"></i>ORDER ON WHATSAPP
                   </button>
                   <button
                     className="btn btn-outline-primary btn-lg"
                     onClick={handleAskOnWhatsApp}
                   >
-                    <i className="fab fa-whatsapp me-2"></i>Ask on WhatsApp
+                    <i className="fab fa-whatsapp me-2"></i>ASK ON WHATSAPP
                   </button>
                 </div>
               </div>

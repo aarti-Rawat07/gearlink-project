@@ -36,10 +36,10 @@ const Cart = () => {
         }
 
         const [cartRes, userRes] = await Promise.all([
-          axios.get("/api/cart", {
+          axios.get(`${import.meta.env.VITE_API_URL}/api/cart`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("/api/auth/profile", {
+          axios.get(`${import.meta.env.VITE_API_URL}/api/auth/profile`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
@@ -60,7 +60,7 @@ const Cart = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.put(
-        `/api/cart/item/${productId}`,
+        `${import.meta.env.VITE_API_URL}/api/cart/item/${productId}`,
         { quantity: newQuantity },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -74,7 +74,7 @@ const Cart = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.delete(
-        `/api/cart/item/${productId}`,
+        `${import.meta.env.VITE_API_URL}/api/cart/item/${productId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setCart(res.data);
@@ -88,7 +88,7 @@ const Cart = () => {
     if (!cart || !user) return;
 
     try {
-      await axios.post("/api/cart/checkout", {}, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/cart/checkout`, {}, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
 
@@ -105,9 +105,9 @@ const Cart = () => {
       // Encode message
       const encodedMessage = encodeURIComponent(message);
 
-      // Open WhatsApp (assuming a business number, replace with actual)
-      // For demo, open without phone, user can choose
-      window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+      // Open WhatsApp with business number
+      const whatsappPhone = '919876543210';
+      window.open(`https://wa.me/${whatsappPhone}?text=${encodedMessage}`, '_blank');
 
       alert("Order placed! Message sent to WhatsApp.");
     } catch (err) {

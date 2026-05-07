@@ -24,7 +24,7 @@ const AdminProductForm = () => {
     if (isEditMode) {
       const fetchProduct = async () => {
         try {
-          const res = await axios.get(`/api/products/${id}`);
+          const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
           const productToEdit = res.data;
           setFormData({
             name: productToEdit.name || '',
@@ -92,12 +92,12 @@ const AdminProductForm = () => {
 
     try {
       if (isEditMode) {
-        await axios.put(`/api/products/${id}`, newProduct, {
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/products/${id}`, newProduct, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert('Product successfully updated!');
       } else {
-        await axios.post('/api/products', newProduct, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/products`, newProduct, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert('Product successfully added!');

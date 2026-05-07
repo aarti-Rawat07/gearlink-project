@@ -69,9 +69,9 @@ const CategoryPage = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            console.log("CategoryPage: Fetching products from /api/products...");
+            console.log(`CategoryPage: Fetching products from ${import.meta.env.VITE_API_URL}/api/products...`);
             try {
-                const response = await axios.get('/api/products');
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
                 console.log("CategoryPage: Response received:", response.data);
                 if (response.data && response.data.length > 0) {
                     setProducts(response.data);
@@ -196,9 +196,15 @@ const CategoryPage = () => {
                                                     )}
                                                 </div>
                                             </div>
-                                            <p className={`stock-status small mb-3 ${product.stock === 'In Stock' ? 'text-success' : 'text-danger'}`}>
-                                                {product.stock}
-                                            </p>
+                                             <p className={`stock-status small mb-3 ${
+                                                 (typeof product.stock === 'number' || !isNaN(Number(product.stock))) 
+                                                   ? (Number(product.stock) > 0 ? 'text-success' : 'text-danger')
+                                                   : (product.stock === 'In Stock' ? 'text-success' : 'text-danger')
+                                               }`}>
+                                                 {(typeof product.stock === 'number' || !isNaN(Number(product.stock))) 
+                                                   ? (Number(product.stock) > 0 ? `${product.stock} Units In Stock` : 'Out of Stock')
+                                                   : product.stock}
+                                             </p>
                                             <Link to={`/product/${product._id || product.id}`} className="btn btn-primary btn-sm w-100">
                                                 View Details
                                             </Link>

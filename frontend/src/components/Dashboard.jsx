@@ -35,9 +35,9 @@ const Dashboard = () => {
         }
 
         const [profileRes, cartRes, ordersRes] = await Promise.all([
-          axios.get("/api/auth/profile", { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get("/api/cart", { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get("/api/cart/history", { headers: { Authorization: `Bearer ${token}` } })
+          axios.get(`${import.meta.env.VITE_API_URL}/api/auth/profile`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${import.meta.env.VITE_API_URL}/api/cart`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${import.meta.env.VITE_API_URL}/api/cart/history`, { headers: { Authorization: `Bearer ${token}` } })
         ]);
 
         setUser(profileRes.data);

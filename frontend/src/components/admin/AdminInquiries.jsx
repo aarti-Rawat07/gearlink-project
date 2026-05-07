@@ -10,7 +10,7 @@ const AdminInquiries = () => {
 
   const fetchInquiries = async () => {
     try {
-      const response = await fetch('/api/contact');
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`);
       const data = await response.json();
       if (response.ok) {
         setInquiries(data);
@@ -28,7 +28,7 @@ const AdminInquiries = () => {
 
   const handleUpdateStatus = async (id, newStatus) => {
     try {
-      const response = await fetch(`/api/contact/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
@@ -49,7 +49,7 @@ const AdminInquiries = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this inquiry?')) return;
     try {
-      const response = await fetch(`/api/contact/${id}`, { method: 'DELETE' });
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact/${id}`, { method: 'DELETE' });
       const result = await response.json();
       if (response.ok) {
         setInquiries(inquiries.filter(inq => getInquiryId(inq) !== id));
@@ -65,7 +65,7 @@ const AdminInquiries = () => {
 
   const handleReplySubmit = async (id) => {
     try {
-      const response = await fetch(`/api/contact/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'Replied', reply: replyText }),

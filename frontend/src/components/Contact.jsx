@@ -11,7 +11,7 @@ const Contact = () => {
     const [inquiries, setInquiries] = useState([]);
     const [inquiryStatus, setInquiryStatus] = useState('');
 
-    const API_URL = '/api';
+
 
     const validateEmail = (email) => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -24,7 +24,7 @@ const Contact = () => {
         }
 
         try {
-            const response = await fetch(`${API_URL}/contact?email=${encodeURIComponent(email.toLowerCase().trim())}`);
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact?email=${encodeURIComponent(email.toLowerCase().trim())}`);
             const data = await response.json();
             if (response.ok) {
                 setInquiries(data);
@@ -67,7 +67,7 @@ const Contact = () => {
         }
 
         try {
-            const response = await fetch(`${API_URL}/contact`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ const Contact = () => {
         }
 
         try {
-            const response = await fetch(`${API_URL}/contact`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ const About = () => {
     const [quickEmail, setQuickEmail] = useState('');
     const [quickMessage, setQuickMessage] = useState('');
     const [quickStatus, setQuickStatus] = useState('');
-    const API_URL = '/api';
+
 
     const validateEmail = (email) => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -46,7 +46,7 @@ const About = () => {
         }
 
         try {
-            const response = await fetch(`${API_URL}/contact`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: quickName, email: quickEmail, message: quickMessage, form: 'about-quick-enquiry' }),

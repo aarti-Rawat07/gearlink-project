@@ -31,7 +31,7 @@ const History = () => {
           return;
         }
 
-        const res = await axios.get("/api/cart/history", {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/cart/history`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

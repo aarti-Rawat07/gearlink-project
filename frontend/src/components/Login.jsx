@@ -33,11 +33,11 @@ const Login = () => {
         }
 
         try {
-            const res = await axios.post("/api/auth/login", { email, password });
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, { email, password });
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("role", res.data.role);
             // Fetch user profile to store name
-            const profileRes = await axios.get("/api/auth/profile", {
+            const profileRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/profile`, {
                 headers: { Authorization: `Bearer ${res.data.token}` },
             });
             localStorage.setItem("userName", profileRes.data.name);

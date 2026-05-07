@@ -64,9 +64,9 @@ const Products = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            console.log("Fetching products from /api/products...");
+            console.log(`Fetching products from ${import.meta.env.VITE_API_URL}/api/products...`);
             try {
-                const res = await axios.get("/api/products");
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
                 console.log("Backend response received:", res.data);
                 if (res.data && res.data.length > 0) {
                     setProducts(res.data);
@@ -128,7 +128,7 @@ const Products = () => {
         const quantity = quantities[productId] || 1;
 
         try {
-            await axios.post("/api/cart", { productId, quantity }, {
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/cart`, { productId, quantity }, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             alert("Added to cart");
@@ -329,9 +329,13 @@ const Products = () => {
                                                     {(product.rating || 5) >= 4.8 && (
                                                         <span className="badge-best-seller">★ Best Seller</span>
                                                     )}
-                                                    <span className={`badge-stock ${(product.stock || 'In Stock') === 'In Stock' ? 'stock-in' : 'stock-out'}`}>
+                                                    <span className={`badge-stock ${
+                                                        (typeof product.stock === 'number' || !isNaN(Number(product.stock))) 
+                                                          ? (Number(product.stock) > 0 ? 'stock-in' : 'stock-out')
+                                                          : (product.stock === 'In Stock' ? 'stock-in' : 'stock-out')
+                                                      }`}>
                                                         {product.stock || 'In Stock'}
-                                                    </span>
+                                                      </span>
                                                     <img src={getImageUrl(product.image)} alt={product.name} className="product-img" />
                                                 </div>
                                             </Link>

@@ -9,7 +9,7 @@ const AdminProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get('/api/products');
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
         setProducts(res.data);
       } catch (err) {
         console.error('Failed to fetch admin products', err);
@@ -26,7 +26,7 @@ const AdminProducts = () => {
         return;
       }
       try {
-        await axios.delete(`/api/products/${id}`, {
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/products/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setProducts(products.filter(p => p._id !== id));
