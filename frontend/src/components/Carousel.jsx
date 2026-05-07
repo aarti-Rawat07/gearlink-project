@@ -48,7 +48,7 @@ const Landing = () => {
 
                         <div className="carousel-caption">
                             <h1 className="display-2 text-uppercase text-white mb-4 animated zoomIn">
-                                Reliable Automotive Parts for Every Vehicle with truth
+                                Reliable Automotive Parts for Every Vehicle with Trusts
                             </h1>
 
                             <p>
