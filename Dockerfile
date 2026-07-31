@@ -1,25 +1,28 @@
-# Use Node.js 18 Alpine for smaller image
+# Use Node.js 18 Alpine
 FROM node:18-alpine
 
-# Set working directory
 WORKDIR /app
 
-# Copy package.json and install dependencies for backend
+# Backend dependencies
 COPY backend/package*.json ./backend/
-RUN cd backend && npm ci --only=production
+RUN cd backend && npm install
 
-# Copy backend source
-COPY backend/ ./backend/
+# Backend source
+COPY backend ./backend
 
-# Copy frontend and build it
-COPY gearlink-react/ ./gearlink-react/
-RUN cd gearlink-react && npm ci && npm run build
+# Frontend dependencies
+COPY frontend/package*.json ./frontend/
+RUN cd frontend && npm install
 
-# Copy built frontend to backend public
-RUN cp -r gearlink-react/dist backend/public
+# Frontend source
+COPY frontend ./frontend
 
-# Expose port
+# Build frontend
+RUN cd frontend && npm run build
+
+# Copy build to backend/public
+RUN mkdir -p backend/public && cp -r frontend/dist/* backend/public/
+
 EXPOSE 5000
 
-# Start the app
 CMD ["node", "backend/server.js"]
