@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'http://3.7.189.98:5000',
+      '/api': 'https://gearlink-project.onrender.com',
     },
   },
 })
